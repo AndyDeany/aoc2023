@@ -111,7 +111,7 @@ public class Main
         }
         catch (InvocationTargetException e)
         {
-            System.out.println(MessageFormat.format("The ''{0}.{1}'' method is not public", aoc.getClass().getName(), PuzzleMethod.getName()));
+            System.out.println(MessageFormat.format("The ''{0}.{1}'' threw an exception", aoc.getClass().getName(), PuzzleMethod.getName()));
             throw new RuntimeException(e);
         }
     }
