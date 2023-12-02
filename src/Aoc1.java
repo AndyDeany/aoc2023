@@ -1,3 +1,4 @@
+import javax.sound.sampled.Line;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -6,8 +7,8 @@ import java.util.regex.Pattern;
 
 public class Aoc1 extends Aoc
 {
-    private final Pattern pattern1 = Pattern.compile("\\d");
-    private final Pattern pattern2 = Pattern.compile("(?=(\\d|one|two|three|four|five|six|seven|eight|nine))");
+    private final Pattern pattern1 = Pattern.compile("(?<digit>\\d)");
+    private final Pattern pattern2 = Pattern.compile("(?=(?<digit>\\d|one|two|three|four|five|six|seven|eight|nine))");
     private static final HashMap<String, Character> digitMap = new HashMap<>();
 
     public Aoc1()
@@ -25,53 +26,23 @@ public class Aoc1 extends Aoc
 
     public int Puzzle1(List<String> calibrationDocument)
     {
-        int sum = 0;
-        for (String line : calibrationDocument)
-        {
-            sum += CalibrationValue1(line);
-        }
-
-        return sum;
-    }
-
-    private int CalibrationValue1(String line)
-    {
-        Character first_digit = null;
-        Character last_digit = null;
-        for (Character c : line.toCharArray())
-        {
-            if (!isDigit(c)) { continue; }
-            if (first_digit == null)
-            {
-                first_digit = c;
-            }
-            last_digit = c;
-        }
-
-        if (first_digit == null) { throw new IllegalArgumentException("No digit in line"); }
-
-        return Integer.parseInt("" + first_digit + last_digit);
-    }
-
-    private boolean isDigit(char c)
-    {
-        return Character.isDigit(c);
+        return Puzzle(calibrationDocument, pattern1);
     }
 
     public int Puzzle2(List<String> calibrationDocument)
     {
+        return Puzzle(calibrationDocument, pattern2);
+    }
+
+    private int Puzzle(List<String> calibrationDocument, Pattern pattern)
+    {
         int sum = 0;
         for (String line : calibrationDocument)
         {
-            sum += CalibrationValue2(line);
+            sum += CalibrationValue(line, pattern);
         }
 
         return sum;
-    }
-
-    private int CalibrationValue2(String line)
-    {
-        return CalibrationValue(line, pattern2);
     }
 
     private int CalibrationValue(String line, Pattern pattern)
@@ -82,7 +53,7 @@ public class Aoc1 extends Aoc
         Character last_digit = null;
         while (matcher.find())
         {
-            char c = StringDigitToChar(matcher.group(1));
+            char c = StringDigitToChar(matcher.group("digit"));
             if (first_digit == null)
             {
                 first_digit = c;
