@@ -54,7 +54,7 @@ public class Main
         }
         catch (ClassNotFoundException e)
         {
-            System.out.println("No such class: " + className);
+            System.out.println(MessageFormat.format("No such class ''{0}''", className));
             throw new RuntimeException(e);
         }
 
