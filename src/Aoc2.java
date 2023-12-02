@@ -50,7 +50,7 @@ class Game
     private final static Pattern setPattern = Pattern.compile("(?<set>(?:\\d+ (?:red|green|blue)(?:, )?)+)(?:;|$)");
 
     public int id;
-    public List<CubeSet> sets = new ArrayList<CubeSet>();
+    public List<CubeSet> sets = new ArrayList<>();
     public int power;
 
     public Game(String gameString)
