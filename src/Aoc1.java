@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 public class Aoc1 extends Aoc
 {
+    private final Pattern pattern1 = Pattern.compile("\\d");
+    private final Pattern pattern2 = Pattern.compile("(?=(\\d|one|two|three|four|five|six|seven|eight|nine))");
     private static final HashMap<String, Character> digitMap = new HashMap<>();
 
     public Aoc1()
@@ -26,13 +28,13 @@ public class Aoc1 extends Aoc
         int sum = 0;
         for (String line : calibrationDocument)
         {
-            sum += CalibrationValue(line);
+            sum += CalibrationValue1(line);
         }
 
         return sum;
     }
 
-    private int CalibrationValue(String line)
+    private int CalibrationValue1(String line)
     {
         Character first_digit = null;
         Character last_digit = null;
@@ -67,9 +69,12 @@ public class Aoc1 extends Aoc
         return sum;
     }
 
-    private final Pattern pattern = Pattern.compile("(?=(\\d|one|two|three|four|five|six|seven|eight|nine))");
-
     private int CalibrationValue2(String line)
+    {
+        return CalibrationValue(line, pattern2);
+    }
+
+    private int CalibrationValue(String line, Pattern pattern)
     {
         Matcher matcher = pattern.matcher(line);
 
